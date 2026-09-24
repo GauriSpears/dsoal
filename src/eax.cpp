@@ -145,6 +145,9 @@ DWORD EAX4Context_Query(DWORD propid)
     case EAXCONTEXT_AIRABSORPTIONHF:
     case EAXCONTEXT_HFREFERENCE:
     case EAXCONTEXT_LASTERROR:
+    case EAXCONTEXT_SPEAKERCONFIG:
+    case EAXCONTEXT_EAXSESSION:
+    case EAXCONTEXT_MACROFXFACTOR:
         return KSPROPERTY_SUPPORT_GET | KSPROPERTY_SUPPORT_SET;
     }
     FIXME("Unhandled propid: {:#010x}", propid);
@@ -163,6 +166,8 @@ DWORD EAX4Slot_Query(DWORD propid)
     case EAXFXSLOT_VOLUME:
     case EAXFXSLOT_LOCK:
     case EAXFXSLOT_FLAGS:
+    case EAXFXSLOT_OCCLUSION:
+    case EAXFXSLOT_OCCLUSIONLFRATIO:
         return KSPROPERTY_SUPPORT_GET | KSPROPERTY_SUPPORT_SET;
     }
     /* FIXME: This should probably only succeed for the available parameters of
@@ -208,10 +213,34 @@ DWORD EAX4Source_Query(DWORD propid)
     case EAXSOURCE_OCCLUSIONSENDPARAMETERS:
     case EAXSOURCE_EXCLUSIONSENDPARAMETERS:
     case EAXSOURCE_ACTIVEFXSLOTID:
+    case EAXSOURCE_MACROFXFACTOR:
+    case EAXSOURCE_SPEAKERLEVELS:
+    case EAXSOURCE_ALL2DPARAMETERS:
         return KSPROPERTY_SUPPORT_GET | KSPROPERTY_SUPPORT_SET;
     }
     FIXME("Unhandled propid: {:#010x}", propid);
     return 0;
+}
+#undef PREFIX
+
+#define PREFIX "EAX5Context_Query "
+DWORD EAX5Context_Query(DWORD propid)
+{
+    return EAX4Context_Query(propid);
+}
+#undef PREFIX
+
+#define PREFIX "EAX5Slot_Query "
+DWORD EAX5Slot_Query(DWORD propid)
+{
+    return EAX4Slot_Query(propid);
+}
+#undef PREFIX
+
+#define PREFIX "EAX5Source_Query "
+DWORD EAX5Source_Query(DWORD propid)
+{
+    return EAX4Source_Query(propid);
 }
 #undef PREFIX
 
